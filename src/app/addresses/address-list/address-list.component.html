@@ -1,0 +1,29 @@
+<h5 class="text-center">Address</h5>
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Street</th>
+      <th scope="col">Ward</th>
+      <th scope="col">District</th>
+      <th scope="col">City</th>
+      <th scope="col">Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let address of addresses">
+      <td>{{address.streetName}}</td>
+      <td>{{address.ward}}</td>
+      <td>{{address.district}}</td>
+      <td>{{address.city}}</td>
+      <td>{{address.country}}</td>
+      <td>
+        <a class="btn">
+          <i class="fa fa-pencil" (click)="onEdit(address)"></i>
+        </a>
+        <a class="btn">
+            <i class="fa fa-trash-o"></i>
+          </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
