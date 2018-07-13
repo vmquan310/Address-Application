@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { AddressService } from '../shared/address.service'
 import { Address } from '../shared/address.model'
@@ -12,9 +13,9 @@ export class AddressListComponent implements OnInit {
 
   addressList : Address[];
 
-  public addresses : any[];
+  addresses : Address[];
 
-  constructor(private addressService: AddressService) { }
+  constructor(private addressService: AddressService, private location: Location) { }
 
   ngOnInit() {
     // var x = this.addressService.getData();
@@ -26,10 +27,32 @@ export class AddressListComponent implements OnInit {
     //     this.addressList.push(y as Address)
     //   })
     // });
-    this.addresses = this.addressService.getList();
+    this.getAddresses();
+  }
+
+  @Input() address: Address;
+
+  getAddresses(): void {
+    this.addressService.getAddresses()
+    .subscribe(addresses => this.addresses = addresses);
   }
 
   onEdit(address){
     this.addressService.selectedAddress = Object.assign({},address);
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  save(): void {
+    console.log(this.address);
+    this.addressService.updateAddress(this.address)
+      .subscribe(() => this.goBack());
+  }
+
+  delete(address: Address): void {
+    this.addresses = this.addresses.filter(h => h !== address);
+    this.addressService.deleteAddress(address).subscribe();
   }
 }
