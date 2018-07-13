@@ -17,13 +17,58 @@
       <td>{{address.city}}</td>
       <td>{{address.country}}</td>
       <td>
-        <a class="btn">
+        <a class="btn" data-toggle="modal" data-target="#exampleModal">
           <i class="fa fa-pencil" (click)="onEdit(address)"></i>
         </a>
         <a class="btn">
-            <i class="fa fa-trash-o"></i>
-          </a>
+          <i class="fa fa-trash-o" (click)="delete(address)"></i>
+        </a>
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
+                <div class="form-group">
+                      <input type="hidden" class="form-control" name="$id" #$id="ngModel" [(ngModel)]="addressService.selectedAddress.$id">
+                    </div>
+                <div class="form-group">
+                  <label>Street Name</label>
+                  <input class="form-control" name="streetName" #streetName="ngModel" [(ngModel)]="addressService.selectedAddress.streetName" required>
+                </div>
+                <div class="form-group">
+                  <label>Ward</label>
+                  <input class="form-control" name="ward" #ward="ngModel" [(ngModel)]="addressService.selectedAddress.ward">
+                </div>
+                <div class="form-group">
+                  <label>District</label>
+                  <input class="form-control" name="district" #district="ngModel" [(ngModel)]="addressService.selectedAddress.district">
+                </div>
+                <div class="form-group">
+                  <label>City</label>
+                  <input class="form-control" name="city" #city="ngModel" [(ngModel)]="addressService.selectedAddress.city">
+                </div>
+                <div class="form-group">
+                  <label>Country</label>
+                  <input class="form-control" name="country" #country="ngModel" [(ngModel)]="addressService.selectedAddress.country">
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" [disabled]="!addressForm.valid" (click)="save()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

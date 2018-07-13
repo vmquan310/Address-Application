@@ -1,5 +1,5 @@
 export class Address {
-    $id: string;
+    id: string;
     streetName: string;
     ward: string;
     district: string;
